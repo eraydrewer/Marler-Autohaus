@@ -1,45 +1,40 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
 <title>THE LUX - AUTOHAUS SYSTEM</title>
-
 <style>
 body {
-    font-family: Arial;
-    background: #0a0a0a;
+    font-family: Arial, sans-serif;
+    background-color: #0a0a0a;
     color: white;
     padding: 20px;
 }
 
 .card {
     background: #1a1a1a;
-    padding: 20px;
+    padding: 15px;
     margin-bottom: 20px;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
-input {
+input, button {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     margin: 5px 0;
     border-radius: 10px;
-    border: none;
+    border: 1px solid #333;
 }
 
 button {
-    padding: 10px;
+    background-color: #3a6df0;
+    color: white;
     border: none;
-    border-radius: 10px;
     cursor: pointer;
 }
 
-.btn-blue {
-    background: #3a6df0;
-    color: white;
-    width: 100%;
-    margin-top: 10px;
+button:hover {
+    background-color: #2756b5;
 }
 
 .discount-wrap {
@@ -50,84 +45,89 @@ button {
 
 .btn-discount {
     flex: 1;
-    padding: 10px;
-    background: #333;
+    padding: 8px;
+    background-color: #333;
     color: white;
+    border: 1px solid #444;
+    border-radius: 8px;
 }
 
 .btn-discount.active {
-    background: #3a6df0;
+    background-color: #3a6df0;
+}
+
+#endpreis {
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 18px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🔥 ANKAUF -->
+<!-- ANKAUF -->
 <div class="card">
-<h2>🚗 Ankauf</h2>
-<input id="ankauf-auto" placeholder="Auto Name">
-<input id="ankauf-preis" type="number" placeholder="Preis">
-<input id="ankauf-vorbesitzer" placeholder="Vorbesitzer">
-<input id="ankauf-mitarbeiter" placeholder="Mitarbeiter">
-<button class="btn-blue" onclick="ankauf()">Speichern</button>
+    <h2>🚗 Ankauf</h2>
+    <input id="ankauf-auto" placeholder="Auto Name" type="text">
+    <input id="ankauf-preis" placeholder="Ankaufspreis (€)" type="number">
+    <input id="ankauf-vorbesitzer" placeholder="Vorbesitzer" type="text">
+    <input id="ankauf-mitarbeiter" placeholder="Mitarbeiter" type="text">
+    <button onclick="ankauf()">Ankauf speichern</button>
 </div>
 
-<!-- 🔥 VERKAUF -->
+<!-- VERKAUF -->
 <div class="card">
-<h2>💰 Verkauf</h2>
+    <h2>💰 Verkauf</h2>
+    <input id="verkauf-auto" placeholder="Auto Name" type="text">
+    <input id="verkauf-preis" placeholder="Verkaufspreis (€)" type="number">
+    <input id="verkauf-vorbesitzer" placeholder="Vorbesitzer" type="text">
+    <input id="verkauf-mitarbeiter" placeholder="Mitarbeiter" type="text">
 
-<input id="verkauf-auto" placeholder="Auto Name">
-<input id="verkauf-preis" type="number" placeholder="Preis">
-<input id="verkauf-vorbesitzer" placeholder="Vorbesitzer">
-<input id="verkauf-mitarbeiter" placeholder="Mitarbeiter">
+    <div class="discount-wrap" id="sale-discount">
+        <button class="btn-discount active" onclick="setSaleDiscount(0,this)">0%</button>
+        <button class="btn-discount" onclick="setSaleDiscount(25,this)">25%</button>
+        <button class="btn-discount" onclick="setSaleDiscount(50,this)">50%</button>
+        <button class="btn-discount" onclick="setSaleDiscount(75,this)">75%</button>
+        <button class="btn-discount" onclick="setSaleDiscount(100,this)">100%</button>
+    </div>
 
-<div class="discount-wrap" id="sale-discount">
-<button class="btn-discount active" onclick="setSaleDiscount(0,this)">0%</button>
-<button class="btn-discount" onclick="setSaleDiscount(25,this)">25%</button>
-<button class="btn-discount" onclick="setSaleDiscount(50,this)">50%</button>
-<button class="btn-discount" onclick="setSaleDiscount(75,this)">75%</button>
-<button class="btn-discount" onclick="setSaleDiscount(100,this)">100%</button>
+    <div id="endpreis">Endpreis: 0€</div>
+
+    <button onclick="verkauf()">Verkauf speichern</button>
 </div>
 
-<div id="verkauf-endpreis">Endpreis: 0€</div>
-
-<button class="btn-blue" onclick="verkauf()">Verkauf speichern</button>
-</div>
-
-<!-- 🔥 REPARATUR -->
+<!-- REPARATUR -->
 <div class="card">
-<h2>🔧 Reparaturkasten</h2>
+    <h2>🔧 Reparaturkasten</h2>
+    <input id="rep-anzahl" placeholder="Anzahl" type="number">
+    <input id="rep-mitarbeiter" placeholder="Mitarbeiter" type="text">
 
-<input id="rep-anzahl" type="number" placeholder="Anzahl">
-<input id="rep-mitarbeiter" placeholder="Mitarbeiter">
+    <div class="discount-wrap" id="rep-discount">
+        <button class="btn-discount active" onclick="setRepDiscount(0,this)">0%</button>
+        <button class="btn-discount" onclick="setRepDiscount(25,this)">25%</button>
+        <button class="btn-discount" onclick="setRepDiscount(50,this)">50%</button>
+        <button class="btn-discount" onclick="setRepDiscount(75,this)">75%</button>
+        <button class="btn-discount" onclick="setRepDiscount(100,this)">100%</button>
+    </div>
 
-<div class="discount-wrap" id="rep-discount">
-<button class="btn-discount active" onclick="setRepDiscount(0,this)">0%</button>
-<button class="btn-discount" onclick="setRepDiscount(25,this)">25%</button>
-<button class="btn-discount" onclick="setRepDiscount(50,this)">50%</button>
-<button class="btn-discount" onclick="setRepDiscount(75,this)">75%</button>
-<button class="btn-discount" onclick="setRepDiscount(100,this)">100%</button>
-</div>
+    <div id="rep-preis">Preis: 0€</div>
 
-<div id="rep-preis">Preis: 0€</div>
-
-<button class="btn-blue" onclick="repCalc()">Berechnen</button>
+    <button onclick="repCalc()">Berechnen</button>
 </div>
 
 <script>
-
 let saleDiscount = 0;
 let repDiscount = 0;
 
-/* 🔥 ANKAUF */
+// ANKAUF
 function ankauf() {
     const auto = document.getElementById('ankauf-auto').value;
     const preis = document.getElementById('ankauf-preis').value;
     const vor = document.getElementById('ankauf-vorbesitzer').value;
     const mit = document.getElementById('ankauf-mitarbeiter').value;
 
-    if(!auto || !preis || !vor || !mit){
+    if (!auto || !preis || !vor || !mit) {
         alert("Alle Felder ausfüllen!");
         return;
     }
@@ -135,63 +135,56 @@ function ankauf() {
     alert(`Ankauf gespeichert: ${auto} für ${preis}€`);
 }
 
-/* 🔥 VERKAUF DISCOUNT */
-function setSaleDiscount(val, btn){
+// VERKAUF
+function setSaleDiscount(val, btn) {
     saleDiscount = val;
     document.querySelectorAll('#sale-discount .btn-discount')
-    .forEach(b => b.classList.remove('active'));
+        .forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     calcSale();
 }
 
-function calcSale(){
+function calcSale() {
     const preis = parseFloat(document.getElementById('verkauf-preis').value) || 0;
     const rabatt = preis * (saleDiscount / 100);
     const endpreis = preis - rabatt;
 
-    document.getElementById('verkauf-endpreis').innerText =
-        "Endpreis: " + endpreis + "€";
+    document.getElementById('endpreis').innerText = `Endpreis: ${endpreis}€`;
 }
 
-/* 🔥 VERKAUF */
-function verkauf(){
+function verkauf() {
     const auto = document.getElementById('verkauf-auto').value;
     const preis = parseFloat(document.getElementById('verkauf-preis').value);
     const vor = document.getElementById('verkauf-vorbesitzer').value;
     const mit = document.getElementById('verkauf-mitarbeiter').value;
 
-    if(!auto || !preis || !vor || !mit){
+    if (!auto || !preis || !vor || !mit) {
         alert("Alle Felder ausfüllen!");
         return;
     }
 
     const endpreis = preis - (preis * saleDiscount / 100);
 
-    alert(`Verkauf: ${auto} für ${endpreis}€`);
+    alert(`Verkauf gespeichert: ${auto} für ${endpreis}€`);
 }
 
-/* 🔥 REPARATUR */
-function setRepDiscount(val, btn){
+// REPARATUR
+function setRepDiscount(val, btn) {
     repDiscount = val;
-
     document.querySelectorAll('#rep-discount .btn-discount')
-    .forEach(b => b.classList.remove('active'));
-
+        .forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     repCalc();
 }
 
-function repCalc(){
+function repCalc() {
     const anzahl = parseInt(document.getElementById('rep-anzahl').value) || 0;
-
     const preis = anzahl * 4000;
     const rabatt = preis * (repDiscount / 100);
     const endpreis = preis - rabatt;
 
-    document.getElementById('rep-preis').innerText =
-        "Preis: " + endpreis + "€";
+    document.getElementById('rep-preis').innerText = `Preis: ${endpreis}€`;
 }
-
 </script>
 
 </body>
