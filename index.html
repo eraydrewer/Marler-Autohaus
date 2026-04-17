@@ -13,7 +13,6 @@ body {
     padding: 0;
 }
 
-/* 🔥 HEADER */
 .header {
     width: 100%;
     background: rgba(20,20,30,0.95);
@@ -24,7 +23,6 @@ body {
     box-shadow: 0 5px 15px rgba(0,0,0,0.5);
 }
 
-/* LOGIN */
 .login-screen {
     display: flex;
     justify-content: center;
@@ -48,17 +46,10 @@ body {
     border: none;
 }
 
-/* APP */
-.app {
-    display: none;
-}
+.app { display: none; }
 
-/* CONTENT */
-.main {
-    padding: 40px;
-}
+.main { padding: 40px; }
 
-/* GRID */
 .container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -68,35 +59,28 @@ body {
 }
 
 @media (max-width: 1100px) {
-    .container {
-        grid-template-columns: 1fr 1fr;
-    }
+    .container { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 700px) {
-    .container {
-        grid-template-columns: 1fr;
-    }
+    .container { grid-template-columns: 1fr; }
 }
 
-/* KARTEN */
 .card {
     background: rgba(20, 20, 30, 0.85);
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    min-height: 520px; /* 🔥 länger gemacht */
+    min-height: 520px;
     display: flex;
     flex-direction: column;
 }
 
-/* Titel */
 .card h2 {
     text-align: center;
     margin-bottom: 20px;
 }
 
-/* Inputs */
 input {
     width: 100%;
     padding: 15px;
@@ -107,7 +91,6 @@ input {
     color: white;
 }
 
-/* Buttons */
 button {
     width: 100%;
     padding: 15px;
@@ -116,21 +99,19 @@ button {
     background: #3a6df0;
     color: white;
     cursor: pointer;
-    margin-top: auto; /* 🔥 schiebt Button nach unten */
+    margin-top: auto;
 }
 
 button:hover {
     background: #2756b5;
 }
 
-/* Rabatt */
 .discount-wrap {
     display: flex;
     gap: 10px;
     margin-top: 10px;
 }
 
-/* 🔥 MEHR ABSTAND ZUM PREIS */
 .discount-wrap + .result {
     margin-top: 25px;
 }
@@ -145,7 +126,6 @@ button:hover {
     background: #3a6df0;
 }
 
-/* Anzeige */
 .result {
     text-align: center;
     font-weight: bold;
@@ -155,7 +135,6 @@ button:hover {
 
 <body>
 
-<!-- LOGIN -->
 <div class="login-screen" id="login">
     <div class="login-box">
         <h2>Login</h2>
@@ -165,7 +144,6 @@ button:hover {
     </div>
 </div>
 
-<!-- APP -->
 <div class="app" id="app">
 
 <div class="header">🚗 Autohaus</div>
@@ -177,6 +155,7 @@ button:hover {
     <div class="card">
         <h2>🚗 Ankauf</h2>
         <input id="a_auto" placeholder="Auto Name">
+        <input id="a_chip" placeholder="Chip"> <!-- 🔥 NEU -->
         <input id="a_preis" type="number" placeholder="Preis (€)">
         <input id="a_vor" placeholder="Vorbesitzer">
         <input id="a_mit" placeholder="Mitarbeiter">
@@ -241,6 +220,11 @@ function loginUser() {
     }
 }
 
+/* 🔥 ZAHL FORMATIERUNG */
+function formatEuro(num){
+    return num.toLocaleString('de-DE') + "€";
+}
+
 let discount = 0;
 let repairDiscount = 0;
 
@@ -264,7 +248,7 @@ function setDiscount(val, btn) {
 function calcSale() {
     let preis = parseFloat(v_preis.value) || 0;
     let end = preis - (preis * discount / 100);
-    endpreis.innerText = `Endpreis: ${end}€`;
+    endpreis.innerText = "Endpreis: " + formatEuro(end);
 }
 
 function verkauf() {
@@ -287,7 +271,7 @@ function setRepairDiscount(val, btn) {
 function calcRepair() {
     let preis = (parseInt(r_anzahl.value) || 0) * 4000;
     let end = preis - (preis * repairDiscount / 100);
-    r_preis.innerText = `Preis: ${end}€`;
+    r_preis.innerText = "Preis: " + formatEuro(end);
 }
 </script>
 
