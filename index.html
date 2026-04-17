@@ -16,6 +16,8 @@ body {
     padding: 15px;
     margin-bottom: 20px;
     border-radius: 10px;
+    max-width: 400px;
+    margin: 0 auto;
 }
 
 input, button {
@@ -24,6 +26,7 @@ input, button {
     margin: 5px 0;
     border-radius: 10px;
     border: 1px solid #333;
+    font-size: 14px;
 }
 
 button {
@@ -31,6 +34,7 @@ button {
     color: white;
     border: none;
     cursor: pointer;
+    font-size: 16px;
 }
 
 button:hover {
@@ -70,7 +74,7 @@ button:hover {
 <div class="card">
     <h2>🚗 Ankauf</h2>
     <input id="ankauf-auto" placeholder="Auto Name" type="text">
-    <input id="ankauf-preis" placeholder="Ankaufspreis (€)" type="number">
+    <input id="ankauf-preis" placeholder="Preis (€)" type="number">
     <input id="ankauf-vorbesitzer" placeholder="Vorbesitzer" type="text">
     <input id="ankauf-mitarbeiter" placeholder="Mitarbeiter" type="text">
     <button onclick="ankauf()">Ankauf speichern</button>
@@ -80,7 +84,7 @@ button:hover {
 <div class="card">
     <h2>💰 Verkauf</h2>
     <input id="verkauf-auto" placeholder="Auto Name" type="text">
-    <input id="verkauf-preis" placeholder="Verkaufspreis (€)" type="number">
+    <input id="verkauf-preis" placeholder="Preis (€)" type="number">
     <input id="verkauf-vorbesitzer" placeholder="Vorbesitzer" type="text">
     <input id="verkauf-mitarbeiter" placeholder="Mitarbeiter" type="text">
 
@@ -139,7 +143,7 @@ function ankauf() {
 function setSaleDiscount(val, btn) {
     saleDiscount = val;
     document.querySelectorAll('#sale-discount .btn-discount')
-        .forEach(b => b.classList.remove('active'));
+    .forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     calcSale();
 }
@@ -172,7 +176,7 @@ function verkauf() {
 function setRepDiscount(val, btn) {
     repDiscount = val;
     document.querySelectorAll('#rep-discount .btn-discount')
-        .forEach(b => b.classList.remove('active'));
+    .forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     repCalc();
 }
