@@ -254,15 +254,14 @@ function ankauf() {
         return;
     }
 
-    const text = ` ANKAUF QUITTUNG
-Auto: ${auto}
-Preis: ${preis}€
-Vorbesitzer: ${vor}
-Mitarbeiter: ${mit}`;
+    sendToDiscord(ANKAUF_WEBHOOK, "🚗 AUTO QUITTUNG", [
+        { name: "Auto", value: auto, inline: false },
+        { name: "Preis", value: preis + "€", inline: false },
+        { name: "Vorbesitzer", value: vor, inline: false },
+        { name: "Mitarbeiter", value: mit, inline: false }
+    ], 3447003);
 
-    sendToDiscord(ANKAUF_WEBHOOK, text);
-
-    alert("Ankauf Quittung wurde an Discord gesendet!");
+    alert("Ankauf gesendet!");
 }
 
 function setDiscount(val, btn) {
@@ -291,15 +290,14 @@ function verkauf() {
         return;
     }
 
-    const text = ` VERKAUF
-Auto: ${auto}
-Preis: ${preis}€
-Vorbesitzer: ${vor}
-Mitarbeiter: ${mit}`;
+    sendToDiscord(VERKAUF_WEBHOOK, "💰 VERKAUF QUITTUNG", [
+        { name: "Auto", value: auto, inline: false },
+        { name: "Preis", value: preis + "€", inline: false },
+        { name: "Vorbesitzer", value: vor, inline: false },
+        { name: "Mitarbeiter", value: mit, inline: false }
+    ], 5763719);
 
-    sendToDiscord(VERKAUF_WEBHOOK, text);
-
-    alert("Verkauf Quittung gesendet!");
+    alert("Verkauf gesendet!");
 }
 
 function setRepairDiscount(val, btn) {
@@ -328,16 +326,15 @@ function calcRepair() {
     const preis = anzahl * 4000;
     const end = preis - (preis * repairDiscount / 100);
 
-    const text = `REPARATUR QUITTUNG
-Anzahl: ${anzahl}
-Preis: ${end}€
-Mitarbeiter: ${mit}`;
+    sendToDiscord(REPARATUR_WEBHOOK, "🔧 REPARATUR QUITTUNG", [
+        { name: "Anzahl", value: String(anzahl), inline: false },
+        { name: "Preis", value: end + "€", inline: false },
+        { name: "Mitarbeiter", value: mit, inline: false }
+    ], 15548997);
 
-    sendToDiscord(REPARATUR_WEBHOOK, text);
-
-    alert("Reparatur wurde an Discord gesendet!");
+    alert("Reparatur gesendet!");
 }
- function sendToDiscord(webhook, title, description, color = 3447003) {
+function sendToDiscord(webhook, title, fields, color = 3447003) {
     fetch(webhook, {
         method: "POST",
         headers: {
@@ -346,8 +343,8 @@ Mitarbeiter: ${mit}`;
         body: JSON.stringify({
             embeds: [{
                 title: title,
-                description: description,
-                color: color
+                color: color,
+                fields: fields
             }]
         })
     });
