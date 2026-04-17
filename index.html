@@ -3,52 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <title>THE LUX - AUTOHAUS SYSTEM</title>
+
 <style>
-/* Hintergrundfarbe: Angenehmes Dunkelblau */
 body {
     font-family: Arial, sans-serif;
-    background-color: #1e2a47; /* Dunkelblau */
+    background-color: #1e2a47;
     color: white;
     padding: 20px;
     margin: 0;
-    overflow-y: scroll; /* Aktiviert Scrollen */
 }
 
-/* Container für beide Formulare nebeneinander */
+/* 🔥 Container jetzt kompakter & zentriert */
 .container {
     display: flex;
-    justify-content: space-between;
-    gap: 30px;
+    justify-content: center;
+    gap: 15px; /* weniger Abstand */
+    flex-wrap: wrap; /* besser auf kleineren Bildschirmen */
 }
 
-/* Karte für Formulare */
+/* Karten */
 .card {
     background: rgba(18, 18, 24, 0.7);
-    padding: 20px;
-    margin-bottom: 30px;
+    padding: 15px;
     border-radius: 10px;
-    max-width: 500px;
-    margin: 20px 0;
-    flex: 1; /* Damit beide Karten nebeneinander passen */
+    width: 320px; /* feste Breite für Gleichheit */
 }
 
-/* Eingabefelder und Buttons */
+/* Inputs kompakter */
 input, button {
     width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 10px;
+    padding: 10px;
+    margin: 6px 0;
+    border-radius: 8px;
     border: 1px solid #333;
-    font-size: 16px;
+    font-size: 14px;
 }
 
-/* Buttons */
 button {
     background-color: #3a6df0;
     color: white;
     border: none;
     cursor: pointer;
-    font-size: 16px;
 }
 
 button:hover {
@@ -58,43 +53,44 @@ button:hover {
 /* Rabattbuttons */
 .discount-wrap {
     display: flex;
-    gap: 10px;
-    margin-top: 10px;
+    gap: 6px;
+    margin-top: 8px;
 }
 
 .btn-discount {
     flex: 1;
-    padding: 12px;
+    padding: 8px;
     background-color: #333;
     color: white;
     border: 1px solid #444;
-    border-radius: 8px;
+    border-radius: 6px;
+    font-size: 12px;
 }
 
 .btn-discount.active {
     background-color: #3a6df0;
 }
 
-/* Preisangaben */
+/* Preise */
 #endpreis, #rep-preis {
     font-weight: bold;
-    margin-top: 10px;
-    font-size: 18px;
+    margin-top: 8px;
+    font-size: 16px;
 }
 
-/* Kartenüberschriften */
+/* Titel */
 .card h2 {
     text-align: center;
-    font-size: 24px;
-    margin-bottom: 15px;
+    font-size: 20px;
+    margin-bottom: 10px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- Container für Ankauf und Verkauf nebeneinander -->
 <div class="container">
+
     <!-- ANKAUF -->
     <div class="card">
         <h2>🚗 Ankauf</h2>
@@ -102,14 +98,14 @@ button:hover {
         <input id="ankauf-preis" placeholder="Preis (€)" type="number">
         <input id="ankauf-vorbesitzer" placeholder="Vorbesitzer" type="text">
         <input id="ankauf-mitarbeiter" placeholder="Mitarbeiter" type="text">
-        <button onclick="ankauf()">Ankauf speichern</button>
+        <button onclick="ankauf()">Speichern</button>
     </div>
 
     <!-- VERKAUF -->
     <div class="card">
         <h2>💰 Verkauf</h2>
         <input id="verkauf-auto" placeholder="Auto Name" type="text">
-        <input id="verkauf-preis" placeholder="Preis (€)" type="number">
+        <input id="verkauf-preis" placeholder="Preis (€)" type="number" oninput="calcSale()">
         <input id="verkauf-vorbesitzer" placeholder="Vorbesitzer" type="text">
         <input id="verkauf-mitarbeiter" placeholder="Mitarbeiter" type="text">
 
@@ -123,34 +119,36 @@ button:hover {
 
         <div id="endpreis">Endpreis: 0€</div>
 
-        <button onclick="verkauf()">Verkauf speichern</button>
+        <button onclick="verkauf()">Speichern</button>
     </div>
+
 </div>
 
 <!-- REPARATUR -->
-<div class="card">
-    <h2>🔧 Reparaturkasten</h2>
-    <input id="rep-anzahl" placeholder="Anzahl" type="number">
-    <input id="rep-mitarbeiter" placeholder="Mitarbeiter" type="text">
+<div class="container">
+    <div class="card">
+        <h2>🔧 Reparaturkasten</h2>
+        <input id="rep-anzahl" placeholder="Anzahl" type="number" oninput="repCalc()">
+        <input id="rep-mitarbeiter" placeholder="Mitarbeiter" type="text">
 
-    <div class="discount-wrap" id="rep-discount">
-        <button class="btn-discount active" onclick="setRepDiscount(0,this)">0%</button>
-        <button class="btn-discount" onclick="setRepDiscount(25,this)">25%</button>
-        <button class="btn-discount" onclick="setRepDiscount(50,this)">50%</button>
-        <button class="btn-discount" onclick="setRepDiscount(75,this)">75%</button>
-        <button class="btn-discount" onclick="setRepDiscount(100,this)">100%</button>
+        <div class="discount-wrap" id="rep-discount">
+            <button class="btn-discount active" onclick="setRepDiscount(0,this)">0%</button>
+            <button class="btn-discount" onclick="setRepDiscount(25,this)">25%</button>
+            <button class="btn-discount" onclick="setRepDiscount(50,this)">50%</button>
+            <button class="btn-discount" onclick="setRepDiscount(75,this)">75%</button>
+            <button class="btn-discount" onclick="setRepDiscount(100,this)">100%</button>
+        </div>
+
+        <div id="rep-preis">Preis: 0€</div>
+
+        <button onclick="repCalc()">Berechnen</button>
     </div>
-
-    <div id="rep-preis">Preis: 0€</div>
-
-    <button onclick="repCalc()">Berechnen</button>
 </div>
 
 <script>
 let saleDiscount = 0;
 let repDiscount = 0;
 
-// ANKAUF
 function ankauf() {
     const auto = document.getElementById('ankauf-auto').value;
     const preis = document.getElementById('ankauf-preis').value;
@@ -165,7 +163,6 @@ function ankauf() {
     alert(`Ankauf gespeichert: ${auto} für ${preis}€`);
 }
 
-// VERKAUF
 function setSaleDiscount(val, btn) {
     saleDiscount = val;
     document.querySelectorAll('#sale-discount .btn-discount')
@@ -178,7 +175,6 @@ function calcSale() {
     const preis = parseFloat(document.getElementById('verkauf-preis').value) || 0;
     const rabatt = preis * (saleDiscount / 100);
     const endpreis = preis - rabatt;
-
     document.getElementById('endpreis').innerText = `Endpreis: ${endpreis}€`;
 }
 
@@ -194,11 +190,9 @@ function verkauf() {
     }
 
     const endpreis = preis - (preis * saleDiscount / 100);
-
     alert(`Verkauf gespeichert: ${auto} für ${endpreis}€`);
 }
 
-// REPARATUR
 function setRepDiscount(val, btn) {
     repDiscount = val;
     document.querySelectorAll('#rep-discount .btn-discount')
@@ -212,7 +206,6 @@ function repCalc() {
     const preis = anzahl * 4000;
     const rabatt = preis * (repDiscount / 100);
     const endpreis = preis - rabatt;
-
     document.getElementById('rep-preis').innerText = `Preis: ${endpreis}€`;
 }
 </script>
