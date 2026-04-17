@@ -213,7 +213,7 @@ button {
 </div>
 
 <div class="result" id="r_preis">Preis: 0€</div>
-<button onclick="calcRepair()">Quittung erstellen</button>
+<button onclick="repairQuittung()">Quittung erstellen</button>
 </div>
 
 </div>
@@ -221,6 +221,9 @@ button {
 </div>
 
 <script>
+const ANKAUF_WEBHOOK = "https://discord.com/api/webhooks/1494651776580976702/sb9EyQkeB2uaF-z49PeZOmAKEdYBDgz35_a6rytH1VJsClvUhRxp5qSztwdtOBcHFohe";
+const VERKAUF_WEBHOOK = "https://discord.com/api/webhooks/1494652790083948665/9a3lOK0zwytNryDWan4PF6lczbIRJFCTAPh8DKO7q42rE8uCmyLPs-EIoNlryLZTcvfW";
+const REPARATUR_WEBHOOK = "https://discord.com/api/webhooks/1494652894987817112/EWSxRK8PCVnHhgarD7emVplEqHVod7sX14Kg-C9TCgH7uIxl0rlQCADMLCIioVUQ2edt";
 function loginUser() {
     const u = document.getElementById("user").value;
     const p = document.getElementById("pass").value;
@@ -241,7 +244,25 @@ let discount = 0;
 let repairDiscount = 0;
 
 function ankauf() {
-    alert(`Ankauf gespeichert`);
+    const auto = document.getElementById("a_auto").value;
+    const preis = document.getElementById("a_preis").value;
+    const vor = document.getElementById("a_vor").value;
+    const mit = document.getElementById("a_mit").value;
+
+    if (!auto || !preis || !vor || !mit) {
+        alert("Bitte alles ausfüllen!");
+        return;
+    }
+
+    const text = `🚗 ANKAUF QUITTUNG
+Auto: ${auto}
+Preis: ${preis}€
+Vorbesitzer: ${vor}
+Mitarbeiter: ${mit}`;
+
+    sendToDiscord(ANKAUF_WEBHOOK, text);
+
+    alert("Ankauf Quittung wurde an Discord gesendet!");
 }
 
 function setDiscount(val, btn) {
@@ -260,7 +281,25 @@ function calcSale() {
 }
 
 function verkauf() {
-    alert("Verkauf gespeichert");
+    const auto = document.getElementById("v_auto").value;
+    const preis = document.getElementById("v_preis").value;
+    const vor = document.getElementById("v_vor").value;
+    const mit = document.getElementById("v_mit").value;
+
+    if (!auto || !preis || !vor || !mit) {
+        alert("Bitte alles ausfüllen!");
+        return;
+    }
+
+    const text = `💰 VERKAUF
+Auto: ${auto}
+Preis: ${preis}€
+Vorbesitzer: ${vor}
+Mitarbeiter: ${mit}`;
+
+    sendToDiscord(VERKAUF_WEBHOOK, text);
+
+    alert("Verkauf Quittung gesendet!");
 }
 
 function setRepairDiscount(val, btn) {
@@ -276,6 +315,38 @@ function calcRepair() {
     let preis = (parseInt(r_anzahl.value) || 0) * 4000;
     let end = preis - (preis * repairDiscount / 100);
     r_preis.innerText = "Preis: " + formatEuro(end);
+}
+    function repairQuittung() {
+    const anzahl = parseInt(document.getElementById("r_anzahl").value) || 0;
+    const mit = document.getElementById("r_mit").value;
+
+    if (!anzahl || !mit) {
+        alert("Bitte alles ausfüllen!");
+        return;
+    }
+
+    const preis = anzahl * 4000;
+    const end = preis - (preis * repairDiscount / 100);
+
+    const text = `🔧 REPARATUR QUITTUNG
+Anzahl: ${anzahl}
+Preis: ${end}€
+Mitarbeiter: ${mit}`;
+
+    sendToDiscord(REPARATUR_WEBHOOK, text);
+
+    alert("Reparatur wurde an Discord gesendet!");
+}
+    function sendToDiscord(webhook, message) {
+    fetch(webhook, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            content: message
+        })
+    });
 }
 </script>
 
