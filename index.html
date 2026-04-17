@@ -337,14 +337,18 @@ Mitarbeiter: ${mit}`;
 
     alert("Reparatur wurde an Discord gesendet!");
 }
-    function sendToDiscord(webhook, message) {
+ function sendToDiscord(webhook, title, description, color = 3447003) {
     fetch(webhook, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            content: message
+            embeds: [{
+                title: title,
+                description: description,
+                color: color
+            }]
         })
     });
 }
