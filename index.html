@@ -7,22 +7,22 @@
 <style>
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    background: radial-gradient(circle at top, #1e2a47, #0b1020);
+    background: linear-gradient(135deg, #1e2a47, #0f172a);
     color: white;
+    margin: 0;
+    padding: 0;
 }
 
-/* HEADER */
 .header {
     width: 100%;
-    padding: 22px;
+    background: rgba(20,20,30,0.95);
+    padding: 20px;
     text-align: center;
-    font-size: 28px;
+    font-size: 26px;
     font-weight: bold;
-    background: rgba(15, 15, 25, 0.9);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
 }
 
-/* LOGIN */
 .login-screen {
     display: flex;
     justify-content: center;
@@ -31,10 +31,10 @@ body {
 }
 
 .login-box {
-    background: rgba(25,25,40,0.95);
+    background: rgba(20,20,30,0.9);
     padding: 40px;
     border-radius: 15px;
-    width: 320px;
+    width: 300px;
     text-align: center;
 }
 
@@ -42,21 +42,18 @@ body {
     width: 100%;
     padding: 12px;
     margin: 10px 0;
+    border-radius: 8px;
+    border: none;
 }
 
-/* APP */
 .app { display: none; }
 
-/* MAIN */
-.main {
-    padding: 40px;
-}
+.main { padding: 40px; }
 
-/* GRID */
 .container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 35px;
+    gap: 40px;
     max-width: 1400px;
     margin: auto;
 }
@@ -69,77 +66,75 @@ body {
     .container { grid-template-columns: 1fr; }
 }
 
-/* CARD FIX (Flex Layout für Button nach unten) */
 .card {
-    background: rgba(25,25,40,0.7);
+    background: rgba(20, 20, 30, 0.85);
     padding: 30px;
-    border-radius: 18px;
-    min-height: 540px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    min-height: 520px;
     display: flex;
     flex-direction: column;
 }
 
-/* TITLE */
 .card h2 {
     text-align: center;
     margin-bottom: 20px;
 }
 
-/* INPUTS */
 input {
     width: 100%;
-    padding: 14px;
-    margin: 10px 0;
+    padding: 15px;
+    margin: 12px 0;
     border-radius: 10px;
     border: none;
-    background: #1f2438;
+    background: #2a2a3d;
     color: white;
 }
 
-/* BUTTONS */
 button {
     width: 100%;
     padding: 15px;
     border-radius: 10px;
     border: none;
-    background: linear-gradient(135deg, #3a6df0, #274bb5);
+    background: #3a6df0;
     color: white;
     cursor: pointer;
-    font-weight: bold;
-    margin-top: auto; /* 🔥 WICHTIG: drückt Button nach unten */
+    margin-top: auto;
 }
 
-/* DISCOUNT */
+button:hover {
+    background: #2756b5;
+}
+
 .discount-wrap {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     margin-top: 10px;
+}
+
+.discount-wrap + .result {
+    margin-top: 25px;
 }
 
 .btn-discount {
     flex: 1;
     padding: 10px;
-    background: #1a1f33;
-    border-radius: 8px;
+    background: #333;
 }
 
 .btn-discount.active {
     background: #3a6df0;
 }
 
-/* RESULT */
 .result {
     text-align: center;
     font-weight: bold;
-    margin-top: 18px;
-    font-size: 18px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
 <div class="login-screen" id="login">
     <div class="login-box">
         <h2>Login</h2>
@@ -149,7 +144,6 @@ button {
     </div>
 </div>
 
-<!-- APP -->
 <div class="app" id="app">
 
 <div class="header">🚗 Autohaus</div>
@@ -161,7 +155,7 @@ button {
     <div class="card">
         <h2>🚗 Ankauf</h2>
         <input id="a_auto" placeholder="Auto Name">
-        <input id="a_chip" placeholder="Chip">
+        <input id="a_chip" placeholder="Chip"> <!-- 🔥 NEU -->
         <input id="a_preis" type="number" placeholder="Preis (€)">
         <input id="a_vor" placeholder="Vorbesitzer">
         <input id="a_mit" placeholder="Mitarbeiter">
@@ -171,10 +165,10 @@ button {
     <!-- VERKAUF -->
     <div class="card">
         <h2>💰 Verkauf</h2>
-        <input id="v_auto">
-        <input id="v_preis" type="number" oninput="calcSale()">
-        <input id="v_vor">
-        <input id="v_mit">
+        <input id="v_auto" placeholder="Auto Name">
+        <input id="v_preis" type="number" placeholder="Preis (€)" oninput="calcSale()">
+        <input id="v_vor" placeholder="Vorbesitzer">
+        <input id="v_mit" placeholder="Mitarbeiter">
 
         <div class="discount-wrap">
             <button class="btn-discount active" onclick="setDiscount(0,this)">0%</button>
@@ -185,14 +179,15 @@ button {
         </div>
 
         <div class="result" id="endpreis">Preis: 0€</div>
+
         <button onclick="verkauf()">Speichern</button>
     </div>
 
     <!-- REPARATURKASTEN -->
     <div class="card">
         <h2>🔧 Reparaturkasten</h2>
-        <input id="r_anzahl" type="number" oninput="calcRepair()">
-        <input id="r_mit">
+        <input id="r_anzahl" type="number" placeholder="Anzahl" oninput="calcRepair()">
+        <input id="r_mit" placeholder="Mitarbeiter">
 
         <div class="discount-wrap">
             <button class="btn-discount active" onclick="setRepairDiscount(0,this)">0%</button>
@@ -203,6 +198,7 @@ button {
         </div>
 
         <div class="result" id="r_preis">Preis: 0€</div>
+
         <button onclick="calcRepair()">Quittung erstellen</button>
     </div>
 
@@ -222,6 +218,11 @@ function loginUser() {
     } else {
         alert("Falsche Daten!");
     }
+}
+
+/* 🔥 ZAHL FORMATIERUNG */
+function formatEuro(num){
+    return num.toLocaleString('de-DE') + "€";
 }
 
 let discount = 0;
@@ -247,7 +248,7 @@ function setDiscount(val, btn) {
 function calcSale() {
     let preis = parseFloat(v_preis.value) || 0;
     let end = preis - (preis * discount / 100);
-    endpreis.innerText = `Endpreis: ${end}€`;
+    endpreis.innerText = "Endpreis: " + formatEuro(end);
 }
 
 function verkauf() {
@@ -270,7 +271,7 @@ function setRepairDiscount(val, btn) {
 function calcRepair() {
     let preis = (parseInt(r_anzahl.value) || 0) * 4000;
     let end = preis - (preis * repairDiscount / 100);
-    r_preis.innerText = `Preis: ${end}€`;
+    r_preis.innerText = "Preis: " + formatEuro(end);
 }
 </script>
 
