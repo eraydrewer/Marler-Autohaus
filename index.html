@@ -254,7 +254,7 @@ function ankauf() {
         return;
     }
 
-    const text = `🚗 ANKAUF QUITTUNG
+    const text = ` ANKAUF QUITTUNG
 Auto: ${auto}
 Preis: ${preis}€
 Vorbesitzer: ${vor}
@@ -291,7 +291,7 @@ function verkauf() {
         return;
     }
 
-    const text = `💰 VERKAUF
+    const text = ` VERKAUF
 Auto: ${auto}
 Preis: ${preis}€
 Vorbesitzer: ${vor}
@@ -328,7 +328,7 @@ function calcRepair() {
     const preis = anzahl * 4000;
     const end = preis - (preis * repairDiscount / 100);
 
-    const text = `🔧 REPARATUR QUITTUNG
+    const text = `REPARATUR QUITTUNG
 Anzahl: ${anzahl}
 Preis: ${end}€
 Mitarbeiter: ${mit}`;
