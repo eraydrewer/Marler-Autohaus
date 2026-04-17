@@ -13,12 +13,26 @@ body {
     padding: 40px;
 }
 
-/* Layout */
+/* 🔥 ALLE 3 FELDER NEBENEINANDER */
 .container {
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    max-width: 1400px;
+    margin: auto;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+    .container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Karten */
@@ -26,7 +40,6 @@ body {
     background: rgba(20, 20, 30, 0.85);
     padding: 30px;
     border-radius: 15px;
-    width: 400px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
@@ -99,6 +112,7 @@ button:hover {
 
 <body>
 
+<!-- 🔥 EIN CONTAINER FÜR ALLES -->
 <div class="container">
 
     <!-- ANKAUF -->
@@ -132,10 +146,7 @@ button:hover {
         <button onclick="verkauf()">Speichern</button>
     </div>
 
-</div>
-
-<!-- REPARATUR -->
-<div class="container">
+    <!-- REPARATUR -->
     <div class="card">
         <h2>🔧 Reparatur</h2>
         <input id="r_anzahl" type="number" placeholder="Anzahl" oninput="calcRepair()">
@@ -153,6 +164,7 @@ button:hover {
 
         <button onclick="calcRepair()">Berechnen</button>
     </div>
+
 </div>
 
 <script>
@@ -177,7 +189,9 @@ function ankauf() {
 /* VERKAUF */
 function setDiscount(val, btn) {
     discount = val;
-    document.querySelectorAll('.btn-discount').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.discount-wrap')[0]
+        .querySelectorAll('button')
+        .forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     calcSale();
 }
@@ -206,7 +220,9 @@ function verkauf() {
 /* REPARATUR */
 function setRepairDiscount(val, btn) {
     repairDiscount = val;
-    btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.discount-wrap')[1]
+        .querySelectorAll('button')
+        .forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     calcRepair();
 }
