@@ -284,7 +284,7 @@ function ankauf() {
         return;
     }
 
-    sendToDiscord(ANKAUF_WEBHOOK, "🚗 AUTO QUITTUNG", [
+    sendToDiscord(ANKAUF_WEBHOOK, "AUTO QUITTUNG", [
         { name: "Auto", value: auto, inline: false },
         { name: "Preis", value: preis + "€", inline: false },
         { name: "Vorbesitzer", value: vor, inline: false },
@@ -320,7 +320,7 @@ function verkauf() {
         return;
     }
 
-    sendToDiscord(VERKAUF_WEBHOOK, "💰 VERKAUF QUITTUNG", [
+    sendToDiscord(VERKAUF_WEBHOOK, "VERKAUF QUITTUNG", [
         { name: "Auto", value: auto, inline: false },
         { name: "Preis", value: preis + "€", inline: false },
         { name: "Vorbesitzer", value: vor, inline: false },
@@ -356,7 +356,7 @@ function calcRepair() {
     const preis = anzahl * 4000;
     const end = preis - (preis * repairDiscount / 100);
 
-    sendToDiscord(REPARATUR_WEBHOOK, "🔧 REPARATUR QUITTUNG", [
+    sendToDiscord(REPARATUR_WEBHOOK, "REPARATUR QUITTUNG", [
         { name: "Anzahl", value: String(anzahl), inline: false },
         { name: "Preis", value: end + "€", inline: false },
         { name: "Mitarbeiter", value: mit, inline: false }
